@@ -14,6 +14,15 @@
 "/" { return DIV; }
 "(" { return P_LEFT; }
 ")" { return P_RIGHT; }
+"^" { return POW; }
+"tan" { return TAN; }
+"sin" { return SIN; }
+"cos" { return COS; }
+"atan" { return ATAN; }
+"asin" { return ASIN; }
+"acos" { return ACOS; }
+"log" { return LOG; }
+"ln" { return LN; }
 \n	{ return EOL; }
 [ \t] { }
 .	{ yyerror("Undefined Symbol!"); }

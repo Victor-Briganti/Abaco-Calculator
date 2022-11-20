@@ -1,5 +1,5 @@
 calc: lex.yy.c y.tab.c
-	gcc lex.yy.c y.tab.c -o calc && make clean
+	gcc lex.yy.c y.tab.c -o calc -lm && make clean
 
 lex.yy.c: 
 	flex scanner.l
