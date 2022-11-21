@@ -1,7 +1,9 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
+
 
 void yyerror(const char *str)
 {
@@ -24,7 +26,7 @@ main()
 %token<f> F_NUM
 %token ADD SUB MULT DIV
 %token POW
-%token SIN COS TAN
+%token SIN COS TAN PI
 %token LOG LN
 %token P_LEFT P_RIGHT
 %token EOL
@@ -43,9 +45,10 @@ input:
 	|  input line 
 	;
 
-line: EOL	{ printf("Enter a expression!"); }
-	| int_expr EOL { printf("= %d\n", $1); }
-	| float_expr EOL { printf("= %f\n", $1); }
+line: EOL	{ printf("Enter a expression\n"); return; }
+	| int_expr EOL { printf("= %d\n", $1); return; }
+	| float_expr EOL { printf("= %f\n", $1); return; }
+	| error EOL { }
 ;
 
 int_expr: I_NUM { $$ = $1; }
@@ -74,6 +77,7 @@ float_expr: F_NUM { $$ = $1; }
 	| LN P_LEFT int_expr P_RIGHT { $$ = log($3); }
 	
 	// TRIGONOMETRY
+	| PI { $$ = 3.141592; }
 	| SIN P_LEFT int_expr P_RIGHT { $$ = sin($3); }
 	| COS P_LEFT int_expr P_RIGHT { $$ = cos($3); }
 	| TAN P_LEFT int_expr P_RIGHT { $$ = tan($3); }
@@ -103,6 +107,5 @@ float_expr: F_NUM { $$ = $1; }
 	
 	// INT / INT
 	| int_expr DIV int_expr { $$ = $1 / (double)$3; }
-
-	;
+;
 %%

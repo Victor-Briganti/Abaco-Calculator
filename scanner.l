@@ -1,5 +1,6 @@
 %{
 #include <stdio.h>
+#include <string.h>
 #include "y.tab.h"
 %}
 
@@ -23,7 +24,8 @@
 "acos" { return ACOS; }
 "log" { return LOG; }
 "ln" { return LN; }
+"pi" { return PI; }
 \n	{ return EOL; }
 [ \t] { }
-.	{ yyerror("Undefined Symbol!"); }
+.	{ yyerror("Undefined Symbol:"); printf("'%s'\n", yytext); }
 %%
