@@ -24,6 +24,8 @@
 "acos" { return ACOS; }
 "log" { return LOG; }
 "ln" { return LN; }
+"sqrt" { return SQRT; }
+"e" { return EUL; }
 "pi" { return PI; }
 \n	{ return EOL; }
 [ \t] { }

@@ -4,7 +4,6 @@
 #include <string.h>
 #include <math.h>
 
-
 void yyerror(const char *str)
 {
 	fprintf(stderr, "error: %s\n", str);
@@ -12,7 +11,9 @@ void yyerror(const char *str)
 
 main()
 {
-	yyparse();
+	while(1) {
+		yyparse();
+	}
 }
 
 %}
@@ -27,7 +28,7 @@ main()
 %token ADD SUB MULT DIV
 %token POW
 %token SIN COS TAN PI
-%token LOG LN
+%token LOG LN EUL SQRT
 %token P_LEFT P_RIGHT
 %token EOL
 
@@ -75,7 +76,10 @@ float_expr: F_NUM { $$ = $1; }
 	| LN P_LEFT float_expr P_RIGHT { $$ = log($3); }
 	| LOG P_LEFT int_expr P_RIGHT { $$ = log10($3); } 
 	| LN P_LEFT int_expr P_RIGHT { $$ = log($3); }
-	
+	| EUL  { $$ = 2.718281; }
+	| SQRT P_LEFT int_expr P_RIGHT { $$ = sqrt($3); }
+	| SQRT P_LEFT float_expr P_RIGHT { $$ = sqrt($3); }
+
 	// TRIGONOMETRY
 	| PI { $$ = 3.141592; }
 	| SIN P_LEFT int_expr P_RIGHT { $$ = sin($3); }
