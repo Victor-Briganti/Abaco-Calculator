@@ -4,15 +4,45 @@
 #include <string.h>
 #include <math.h>
 
+#include <readline/readline.h>
+#include <readline/history.h>
+
+extern FILE *yyin;
+
 void yyerror(const char *str)
 {
 	fprintf(stderr, "error: %s\n", str);
 }
 
-main()
-{
-	while(1) {
+void write (char *buffer) {
+	FILE *ftemp;
+	ftemp = fopen("teste.txt", "w");
+	fputs(buffer, ftemp);
+	fclose(ftemp);
+
+	ftemp = fopen("teste.txt", "a");
+	fputc('\n', ftemp);
+	fclose(ftemp);
+}
+
+
+main() {
+	FILE *ftemp;
+	printf("Abaco Calculator. A simple calculator\nTo exite press <Ctrl-C>\n");
+	rl_bind_key('\t', rl_insert);
+
+	char *buffer;
+	while ((buffer = readline("? ")) != 0) {
+		if (strlen(buffer) > 0) {
+			add_history(buffer);
+		}
+		
+		write(buffer);
+		
+		yyin = fopen("teste.txt", "r");
 		yyparse();
+		
+		free(buffer);
 	}
 }
 
